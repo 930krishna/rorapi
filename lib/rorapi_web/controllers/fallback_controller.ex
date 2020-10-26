@@ -61,4 +61,16 @@ defmodule RorapiWeb.FallbackController do
     |> json(error_resp)
   end
 
+  def call(conn, {:error_message, :message, message}) do
+    conn
+    |> json(
+         %{
+           status_code: "4004",
+           errors: %{
+             message: message
+           }
+         }
+       )
+  end
+
 end
