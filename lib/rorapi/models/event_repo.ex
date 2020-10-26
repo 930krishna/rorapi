@@ -49,4 +49,15 @@ defmodule Rorapi.Models.EventRepo do
     end
   end
 
+  @doc"""
+     This is for list events.
+  """
+  def events_list(params)do
+    get =  Events
+           |> select([a], a)
+           |> order_by([a], desc: a.id)
+           |> Repo.paginate(params)
+    {:ok, get}
+  end
+
 end
