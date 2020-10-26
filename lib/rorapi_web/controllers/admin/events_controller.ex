@@ -25,7 +25,7 @@ defmodule RorapiWeb.Admin.EventsController do
   end
 
   @doc"""
-     This is for update exist event in db.
+     This is for list of events.
   """
   def show(conn, params) do
     with {:ok, value} <- EventRepo.events_list(params) do
