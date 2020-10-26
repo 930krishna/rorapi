@@ -28,6 +28,8 @@ defmodule RorapiWeb.Router do
   scope "/api", RorapiWeb do
     pipe_through :api_without_token
 
+    get "/", PageController, :index
+
     # Admin Login
     post "/admin/login", Main.LoginController, :admin_login
 
@@ -41,8 +43,7 @@ defmodule RorapiWeb.Router do
 
     # Event CRUD
     scope "/event" do
-      resources "/", Admin.EventController, except: [:new, :edit]
-      get "/list", Admin.EventController, :list
+      resources "/", Admin.EventsController, except: [:new, :edit]
     end
   end
 
