@@ -1,10 +1,10 @@
-defmodule Rorapi.Schemas.eventUsers do
+defmodule Rorapi.Schemas.eventusers do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @moduledoc "eventUsers Table Model"
+  @moduledoc "eventusers Table Model"
 
-  schema "eventUsers" do
+  schema "eventusers" do
     field :events_id, :integer
     field :invite_users, {:array, :integer}
     field :confirmed_users, {:array, :integer}
@@ -14,22 +14,22 @@ defmodule Rorapi.Schemas.eventUsers do
   end
 
   @doc false
-  def changeset(eventUsers, attrs) do
-    eventUsers
+  def changeset(eventusers, attrs) do
+    eventusers
     |> cast( attrs, [:events_id, :invite_users])
     |> validate_required([:events_id])
   end
 
   @doc false
-  def changesetUpdateConfirmed(eventUsers, attrs) do
-    eventUsers
+  def changesetUpdateConfirmed(eventusers, attrs) do
+    eventusers
     |> cast( attrs, [:confirmed_users])
     |> validate_required([:confirmed_users])
   end
 
   @doc false
-  def changesetUpdateCancelled(eventUsers, attrs) do
-    eventUsers
+  def changesetUpdateCancelled(eventusers, attrs) do
+    eventusers
     |> cast( attrs, [:cancelled_users])
     |> validate_required([:cancelled_users])
   end
