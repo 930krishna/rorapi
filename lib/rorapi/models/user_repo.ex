@@ -34,4 +34,14 @@ defmodule Rorapi.Models.UserRepo do
     {:ok, get}
   end
 
+  @doc"""
+     This is for user view
+  """
+  def view(params)do
+    case Repo.get_by(Users, email: params["email"], password: params["password"]) do
+      nil -> {:error_message, :message, "Email or Password is wrong."}
+      admin ->  {:ok, admin}
+    end
+  end
+
 end
