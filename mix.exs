@@ -20,7 +20,7 @@ defmodule Rorapi.Mixfile do
   def application do
     [
       mod: {Rorapi.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :scrivener_ecto]
     ]
   end
 
@@ -36,12 +36,15 @@ defmodule Rorapi.Mixfile do
       {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
+      {:ecto_sql, "~> 3.0-rc.1"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.1.2"},
       {:plug_cowboy, "~> 1.0.0"},
+      {:scrivener_ecto, "~> 2.2", override: true},
+      {:scrivener_list, "~> 2.0"}
     ]
   end
 
