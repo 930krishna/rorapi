@@ -45,8 +45,13 @@ defmodule RorapiWeb.Router do
     scope "/event" do
       resources "/", Admin.EventsController, except: [:new, :edit]
     end
-    # User List
-    get "/user/list", Admin.UsersController, :list
+
+    # Users Scope
+    scope "/user" do
+      get "/list", Admin.UsersController, :list
+      post "/invite", Admin.UsersController, :invite
+    end
+
   end
 
   # User API's related to with token
