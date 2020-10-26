@@ -11,7 +11,7 @@ defmodule RorapiWeb.LoginController do
   """
   def admin_login(conn, params) do
     with {:ok, output} <- AdminRepo.view(params) do
-      json conn, %{status: 200, fullname: output.full_name, message: "Login Successfully"}
+      json conn, %{status: 200, fullname: output.full_name, admin_id: output.id, message: "Login Successfully"}
     end
   end
 
@@ -19,7 +19,9 @@ defmodule RorapiWeb.LoginController do
      This is for user login
   """
   def user_login(conn, params) do
-    text conn, "user login"
+    with {:ok, output} <- UserRepo.view(params) do
+      json conn, %{status: 200, fullname: output.full_name, user_id: output.id, message: "Login Successfully"}
+    end
   end
 
 
