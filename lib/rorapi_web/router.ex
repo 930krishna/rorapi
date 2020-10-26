@@ -13,6 +13,11 @@ defmodule RorapiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :api_without_token do
+    plug :accepts, ["json"]
+    plug RorapiWeb.Plugs.PublicIp
+  end
+
   scope "/", RorapiWeb do
     pipe_through :browser # Use the default browser stack
 

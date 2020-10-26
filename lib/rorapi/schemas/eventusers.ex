@@ -1,4 +1,4 @@
-defmodule Rorapi.Schemas.eventusers do
+defmodule Rorapi.Schemas.Eventusers do
   use Ecto.Schema
   import Ecto.Changeset
 
