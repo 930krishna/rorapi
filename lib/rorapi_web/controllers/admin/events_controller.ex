@@ -1,7 +1,7 @@
 defmodule RorapiWeb.Admin.EventsController do
   use RorapiWeb, :controller
 
-  alias RorapiWeb.Class.EventView
+  alias RorapiWeb.Admin.EventView
   alias Rorapi.Models.EventRepo
 
   action_fallback RorapiWeb.FallbackController
@@ -21,6 +21,18 @@ defmodule RorapiWeb.Admin.EventsController do
   def update(conn, params) do
     with {:ok, message} <- EventRepo.update_event(params) do
       success_response_message(conn, message)
+    end
+  end
+
+  @doc"""
+     This is for update exist event in db.
+  """
+  def show(conn, params) do
+    with {:ok, value} <- EventRepo.events_list(params) do
+      conn
+      |> put_status(:ok)
+      |> put_view(EventView)
+      |> render("event.json", key: value)
     end
   end
 
