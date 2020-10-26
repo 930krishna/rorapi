@@ -28,13 +28,14 @@ defmodule RorapiWeb.Router do
   scope "/api", RorapiWeb do
     pipe_through :api_without_token
 
-    get "/", PageController, :index
-
     # Admin Login
-    post "/admin/login", Main.LoginController, :admin_login
+    post "/admin/login", LoginController, :admin_login
 
     # User Login
-    post "/v1/login", Main.LoginController, :user_login
+    post "/v1/login", LoginController, :user_login
+
+    # User Register
+    post "/v1/register", RegisterController, :register
   end
 
   # Admin API's related to with token
