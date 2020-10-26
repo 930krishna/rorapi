@@ -59,8 +59,8 @@ defmodule RorapiWeb.Router do
     pipe_through :api_without_token
     # Event CRUD
     scope "/event" do
-      get "/list", User.EventController, :list
-      post "/add", User.EventController, :add
+      get "/list", V1.EventsController, :list
+      post "/add", V1.EventsController, :add
     end
   end
 
