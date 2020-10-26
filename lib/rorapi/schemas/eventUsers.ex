@@ -15,21 +15,21 @@ defmodule Rorapi.Schemas.eventUsers do
 
   @doc false
   def changeset(eventUsers, attrs) do
-    address
+    eventUsers
     |> cast( attrs, [:events_id, :invite_users])
     |> validate_required([:events_id])
   end
 
   @doc false
   def changesetUpdateConfirmed(eventUsers, attrs) do
-    address
+    eventUsers
     |> cast( attrs, [:confirmed_users])
     |> validate_required([:confirmed_users])
   end
 
   @doc false
   def changesetUpdateCancelled(eventUsers, attrs) do
-    address
+    eventUsers
     |> cast( attrs, [:cancelled_users])
     |> validate_required([:cancelled_users])
   end

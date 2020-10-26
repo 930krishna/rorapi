@@ -19,6 +19,39 @@ defmodule RorapiWeb.Router do
     get "/", PageController, :index
   end
 
+  # API's related to without token
+  scope "/api", RorapiWeb do
+    pipe_through :api_without_token
+
+    # Admin Login
+    post "/admin/login", Main.LoginController, :admin_login
+
+    # User Login
+    post "/v1/login", Main.LoginController, :user_login
+  end
+
+  # Admin API's related to with token
+  scope "/api/admin", RorapiWeb do
+    pipe_through :api_without_token
+
+    # Event CRUD
+    scope "/event" do
+      resources "/", Admin.EventController, except: [:new, :edit]
+      get "/list", Admin.EventController, :list
+    end
+  end
+
+  # User API's related to with token
+  scope "/api/v1", RorapiWeb do
+    pipe_through :api_without_token
+
+    # Event CRUD
+    scope "/event" do
+      get "/list", User.EventController, :list
+      post "/add", User.EventController, :add
+    end
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", RorapiWeb do
   #   pipe_through :api

@@ -19,21 +19,21 @@ defmodule Rorapi.Schemas.Events do
 
   @doc false
   def changeset(events, attrs) do
-    address
+    events
     |> cast( attrs, [:description, :type, :event_date, :duration, :event_host, :location])
     |> validate_required([:description, :type, :event_date, :duration, :event_host, :location])
   end
 
   @doc false
   def changesetAddRSVP(events, attrs) do
-    address
+    events
     |> cast( attrs, [:rsvp_counts])
     |> validate_required([:rsvp_counts])
   end
 
   @doc false
   def changesetCancelRSVP(events, attrs) do
-    address
+    events
     |> cast( attrs, [:rsvp_cancelled_counts])
     |> validate_required([:rsvp_cancelled_counts])
   end

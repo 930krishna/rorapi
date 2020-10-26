@@ -14,7 +14,7 @@ defmodule Rorapi.Schemas.Admin do
 
   @doc false
   def changeset(admin, attrs) do
-    address
+    admin
     |> cast( attrs, [:full_name, :username, :password])
     |> validate_required([:full_name, :username, :password])
   end

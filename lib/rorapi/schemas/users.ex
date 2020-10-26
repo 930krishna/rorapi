@@ -15,7 +15,7 @@ defmodule Rorapi.Schemas.Users do
 
   @doc false
   def changeset(users, attrs) do
-    address
+    users
     |> cast( attrs, [:full_name, :age, :email, :password])
     |> validate_required([:full_name, :age, :email, :password])
   end
