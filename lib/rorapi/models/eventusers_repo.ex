@@ -16,6 +16,7 @@ defmodule Rorapi.Models.EventusersRepo do
     end
   end
 
+  # Private Function for insert event
   defp invite_insert(params) do
     event_map = %{
       events_id: params["events_id"],
@@ -30,6 +31,7 @@ defmodule Rorapi.Models.EventusersRepo do
     end
   end
 
+  # Private Function for update event
   defp invite_update(event_user, params) do
     invite_map = %{
       events_id: params["events_id"],
@@ -42,6 +44,47 @@ defmodule Rorapi.Models.EventusersRepo do
       {:error, changeset} ->
         {:error, changeset}
     end
+  end
+
+  @doc """
+   This is for check event for users.
+  """
+  def check_event(params) do
+    check_event = Eventusers
+          |> where(^event_user_filter(params))
+          |> where([d], d.events_id == ^params["event_id"])
+          |> Repo.one
+    case check_event do
+      nil -> {:error_message, :message, "Event not found."}
+      check_event ->
+        user_id = to_integer_value(params["user_id"])
+        confirm_event = %{confirmed_users: ["#{user_id}"] }
+        changeset = Eventusers.changesetUpdateConfirmed(check_event, confirm_event)
+        case Repo.update(changeset) do
+          {:ok, _response} ->
+            {:ok, "Confirmed attendees."}
+          {:error, changeset} ->
+            {:error, changeset}
+        end
+    end
+  end
+
+  # Private Function for search event for user
+  defp event_user_filter(params)do
+    Enum.reduce(
+      params,
+      dynamic(true),
+      fn
+        {"user_id", value}, dynamic -> id = String.to_integer(value)
+                                  dynamic([d], ^dynamic and fragment("? @> ?", d.invite_users, ^[id]))
+        {_, _}, dynamic -> dynamic
+      end
+    )
+  end
+
+  # Private function convert string to integer
+  defp to_integer_value(key)do
+    if is_integer(key), do: key, else: String.to_integer(key)
   end
 
 end
