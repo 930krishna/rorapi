@@ -1,7 +1,7 @@
 defmodule RorapiWeb.V1.EventsController do
   use RorapiWeb, :controller
 
-#  alias RorapiWeb.Admin.EventView
+  alias RorapiWeb.Admin.EventusersView
   alias Rorapi.Models.EventusersRepo
 
   action_fallback RorapiWeb.FallbackController
@@ -14,7 +14,13 @@ defmodule RorapiWeb.V1.EventsController do
               |> get_req_header("user_id")
               |> List.first
 
-    text conn, "Event list"
+    request = %{"user_id" => user_id}
+    with {:ok, value} <- EventusersRepo.event_list(request) do
+      conn
+      |> put_status(:ok)
+      |> put_view(EventusersView)
+      |> render("eventusers.json", key: value)
+    end
   end
 
   @doc"""
