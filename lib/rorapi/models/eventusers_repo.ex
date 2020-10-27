@@ -3,6 +3,7 @@ defmodule Rorapi.Models.EventusersRepo do
 
   alias Rorapi.Repo
   alias Rorapi.Schemas.Eventusers
+  alias Rorapi.Schemas.Events
 
   @doc """
    This is for invite users in event.
@@ -47,7 +48,7 @@ defmodule Rorapi.Models.EventusersRepo do
   end
 
   @doc """
-   This is for check event for users.
+   This is for check event for users and add it.
   """
   def check_event(params) do
     check_event = Eventusers
@@ -58,11 +59,38 @@ defmodule Rorapi.Models.EventusersRepo do
       nil -> {:error_message, :message, "Event not found."}
       check_event ->
         user_id = to_integer_value(params["user_id"])
-        confirm_event = %{confirmed_users: ["#{user_id}"] }
+        member = Enum.member?(check_event.confirmed_users,user_id)
+        events = if member == true, do: check_event.confirmed_users, else: ["#{user_id}"] ++  check_event.confirmed_users
+        confirm_event = %{confirmed_users: events}
         changeset = Eventusers.changesetUpdateConfirmed(check_event, confirm_event)
         case Repo.update(changeset) do
           {:ok, _response} ->
             {:ok, "Confirmed attendees."}
+          {:error, changeset} ->
+            {:error, changeset}
+        end
+    end
+  end
+
+  @doc """
+   This is for check event for users and cancel it.
+  """
+  def remove_event(params) do
+    check_event = Eventusers
+                  |> where(^event_user_filter(params))
+                  |> where([d], d.events_id == ^params["event_id"])
+                  |> Repo.one
+    case check_event do
+      nil -> {:error_message, :message, "Event not found."}
+      check_event ->
+        user_id = to_integer_value(params["user_id"])
+        member = Enum.member?(check_event.cancelled_users,user_id)
+        events = if member == true, do: check_event.cancelled_users, else: ["#{user_id}"] ++  check_event.cancelled_users
+        confirm_event = %{cancelled_users: events}
+        changeset = Eventusers.changesetUpdateCancelled(check_event, confirm_event)
+        case Repo.update(changeset) do
+          {:ok, _response} ->
+            {:ok, "Removing attendees."}
           {:error, changeset} ->
             {:error, changeset}
         end
