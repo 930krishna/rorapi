@@ -10,7 +10,7 @@ defmodule Rorapi.Models.EventusersRepo do
   def user_invite(params) do
     # Check event id
     # If not exist then insert or if exist then update
-    case Repo.get_by(Events, events_id: params["events_id"]) do
+    case Repo.get_by(Eventusers, events_id: params["events_id"]) do
       nil -> invite_insert(params)
       event_user -> invite_update(event_user, params)
     end
