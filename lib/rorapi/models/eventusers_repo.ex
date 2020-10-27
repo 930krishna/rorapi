@@ -65,6 +65,7 @@ defmodule Rorapi.Models.EventusersRepo do
         changeset = Eventusers.changesetUpdateConfirmed(check_event, confirm_event)
         case Repo.update(changeset) do
           {:ok, _response} ->
+            rsvp_counts(params["event_id"])
             {:ok, "Confirmed attendees."}
           {:error, changeset} ->
             {:error, changeset}
@@ -90,6 +91,7 @@ defmodule Rorapi.Models.EventusersRepo do
         changeset = Eventusers.changesetUpdateCancelled(check_event, confirm_event)
         case Repo.update(changeset) do
           {:ok, _response} ->
+            rsvp_cancel_counts(params["event_id"])
             {:ok, "Removing attendees."}
           {:error, changeset} ->
             {:error, changeset}
@@ -135,6 +137,27 @@ defmodule Rorapi.Models.EventusersRepo do
         {_, _}, dynamic -> dynamic
       end
     )
+  end
+
+  # Private function for manage RSVP Counts
+  defp rsvp_counts(event_id) do
+    event = Repo.get_by(Events, id: event_id)
+    db_value = event.rsvp_counts
+    new_value = 1
+    last_rsvp = db_value + new_value
+    event_map = %{rsvp_counts: last_rsvp}
+    changeset = Events.changesetAddRSVP(event, event_map)
+    Repo.update(changeset)
+  end
+  # Private function for manage RSVP Cancelled Counts
+  defp rsvp_cancel_counts(event_id) do
+    event = Repo.get_by(Events, id: event_id)
+    db_value = event.rsvp_cancelled_counts
+    new_value = 1
+    last_rsvp = db_value + new_value
+    event_map = %{rsvp_cancelled_counts: last_rsvp}
+    changeset = Events.changesetCancelRSVP(event, event_map)
+    Repo.update(changeset)
   end
 
   # Private function convert string to integer
