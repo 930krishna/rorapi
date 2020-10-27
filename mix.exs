@@ -44,7 +44,8 @@ defmodule Rorapi.Mixfile do
       {:cowboy, "~> 1.1.2"},
       {:plug_cowboy, "~> 1.0.0"},
       {:scrivener_ecto, "~> 2.2", override: true},
-      {:scrivener_list, "~> 2.0"}
+      {:scrivener_list, "~> 2.0"},
+      {:jason, "~> 1.2"}
     ]
   end
 
