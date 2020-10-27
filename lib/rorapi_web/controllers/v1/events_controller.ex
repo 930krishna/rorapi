@@ -24,6 +24,23 @@ defmodule RorapiWeb.V1.EventsController do
   end
 
   @doc"""
+     This is for list of cancel events.
+  """
+  def cancel_list(conn, params) do
+    user_id = conn
+              |> get_req_header("user_id")
+              |> List.first
+
+    request = %{"user_id" => user_id}
+    with {:ok, value} <- EventusersRepo.event_cancel_list(request) do
+      conn
+      |> put_status(:ok)
+      |> put_view(EventusersView)
+      |> render("eventusers.json", key: value)
+    end
+  end
+
+  @doc"""
      This is for add event.
   """
   def add(conn, params) do
