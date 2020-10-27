@@ -18,9 +18,9 @@ Following below steps to configure rorapi project:
 Endpoints for manage ROR API's:
 
 login_path  POST    	 /api/admin/login                           RorapiWeb.LoginController :admin_login
-     login_path  POST    /api/v1/login                              RorapiWeb.LoginController :user_login
-  register_path  POST    /api/v1/register                           RorapiWeb.RegisterController :register
-    events_path  GET     /api/admin/event                           RorapiWeb.Admin.EventsController :index
+login_path  POST    /api/v1/login                              RorapiWeb.LoginController :user_login
+register_path  POST    /api/v1/register                           RorapiWeb.RegisterController :register
+events_path  GET     /api/admin/event                           RorapiWeb.Admin.EventsController :index
     events_path  GET     /api/admin/event/:id                       RorapiWeb.Admin.EventsController :show
     events_path  POST    /api/admin/event                           RorapiWeb.Admin.EventsController :create
     events_path  PATCH   /api/admin/event/:id                       RorapiWeb.Admin.EventsController :update
