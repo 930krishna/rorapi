@@ -61,6 +61,7 @@ defmodule RorapiWeb.Router do
     scope "/event" do
       get "/list", V1.EventsController, :list
       post "/add", V1.EventsController, :add
+      post "/remove", V1.EventsController, :remove
     end
   end
 
