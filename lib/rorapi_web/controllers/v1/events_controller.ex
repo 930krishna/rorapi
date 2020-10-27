@@ -32,6 +32,21 @@ defmodule RorapiWeb.V1.EventsController do
     end
   end
 
+  @doc"""
+     This is for cancel event.
+  """
+  def remove(conn, params) do
+    user_id = conn
+              |> get_req_header("user_id")
+              |> List.first
+
+    request = %{"user_id" => user_id, "event_id" => params["event_id"]}
+
+    with {:ok, message} <- EventusersRepo.remove_event(request) do
+      success_response_message(conn, message)
+    end
+  end
+
   #Private function
   defp success_response_message(conn, message) do
     conn
