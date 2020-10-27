@@ -25,7 +25,9 @@ defmodule RorapiWeb.Admin.EventView do
       date: value.event_date,
       duration: value.duration,
       host: value.event_host,
-      location: value.location
+      location: value.location,
+      rsvp_counts: value.rsvp_counts,
+      rsvp_cancelled_counts: value.rsvp_cancelled_counts
     }
   end
 
