@@ -110,6 +110,33 @@ defmodule Rorapi.Models.EventusersRepo do
     )
   end
 
+  @doc """
+   This is for list of events for users
+  """
+  def event_list(params) do
+    check_event = Eventusers
+                  |> where(^event_confirm_filter(params))
+                  |> order_by([d], [desc: d.id])
+                  |> Repo.paginate(params)
+    case check_event do
+      nil -> {:error_message, :message, "Events not found."}
+      check_event -> {:ok, check_event}
+    end
+  end
+
+  # Private Function for search event for user
+  defp event_confirm_filter(params)do
+    Enum.reduce(
+      params,
+      dynamic(true),
+      fn
+        {"user_id", value}, dynamic -> id = String.to_integer(value)
+                                       dynamic([d], ^dynamic and fragment("? @> ?", d.confirmed_users, ^[id]))
+        {_, _}, dynamic -> dynamic
+      end
+    )
+  end
+
   # Private function convert string to integer
   defp to_integer_value(key)do
     if is_integer(key), do: key, else: String.to_integer(key)
