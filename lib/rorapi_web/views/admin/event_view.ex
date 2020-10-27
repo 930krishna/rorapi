@@ -30,5 +30,4 @@ defmodule RorapiWeb.Admin.EventView do
       rsvp_cancelled_counts: value.rsvp_cancelled_counts
     }
   end
-
 end
