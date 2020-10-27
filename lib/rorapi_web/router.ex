@@ -36,6 +36,7 @@ defmodule RorapiWeb.Router do
 
     # User Register
     post "/v1/register", RegisterController, :register
+
   end
 
   # Admin API's related to with token
@@ -46,7 +47,7 @@ defmodule RorapiWeb.Router do
       resources "/", Admin.EventsController, except: [:new, :edit]
     end
 
-    # Users Scope
+    # User Scope
     scope "/user" do
       get "/list", Admin.UsersController, :list
       post "/invite", Admin.UsersController, :invite
@@ -57,9 +58,10 @@ defmodule RorapiWeb.Router do
   # User API's related to with token
   scope "/api/v1", RorapiWeb do
     pipe_through :api_without_token
-    # Event CRUD
+    # Event Endpoints
     scope "/event" do
       get "/list", V1.EventsController, :list
+      get "/cancel/list", V1.EventsController, :cancel_list
       post "/add", V1.EventsController, :add
       post "/remove", V1.EventsController, :remove
     end
