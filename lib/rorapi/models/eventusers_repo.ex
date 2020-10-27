@@ -126,6 +126,20 @@ defmodule Rorapi.Models.EventusersRepo do
     end
   end
 
+  @doc """
+   This is for list of cancel events for users
+  """
+  def event_cancel_list(params) do
+    check_event = Eventusers
+                  |> where(^event_cancel_filter(params))
+                  |> order_by([d], [desc: d.id])
+                  |> Repo.paginate(params)
+    case check_event do
+      nil -> {:error_message, :message, "Events not found."}
+      check_event -> {:ok, check_event}
+    end
+  end
+
   # Private Function for search event for user
   defp event_confirm_filter(params)do
     Enum.reduce(
@@ -134,6 +148,19 @@ defmodule Rorapi.Models.EventusersRepo do
       fn
         {"user_id", value}, dynamic -> id = String.to_integer(value)
                                        dynamic([d], ^dynamic and fragment("? @> ?", d.confirmed_users, ^[id]))
+        {_, _}, dynamic -> dynamic
+      end
+    )
+  end
+
+  # Private Function for search event for user
+  defp event_cancel_filter(params)do
+    Enum.reduce(
+      params,
+      dynamic(true),
+      fn
+        {"user_id", value}, dynamic -> id = String.to_integer(value)
+                                       dynamic([d], ^dynamic and fragment("? @> ?", d.cancelled_users, ^[id]))
         {_, _}, dynamic -> dynamic
       end
     )
