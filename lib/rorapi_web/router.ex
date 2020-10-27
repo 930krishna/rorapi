@@ -45,6 +45,8 @@ defmodule RorapiWeb.Router do
     # Event CRUD
     scope "/event" do
       resources "/", Admin.EventsController, except: [:new, :edit]
+      get "/attend_list/:event_id", Admin.EventusersController, :attend_list
+      get "/cancelled_list/:event_id", Admin.EventusersController, :cancelled_list
     end
 
     # User Scope
