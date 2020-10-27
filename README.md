@@ -9,7 +9,6 @@ Following below steps to configure rorapi project:
 3. Import Postman Collection and Environment.
 
 4. Open terminal and execute below commands:
-   mix deps.get 
-   mix phx.server
+   1. mix deps.get   2. mix phx.server
   
    server start in terminal: http://0.0.0.0:4000
