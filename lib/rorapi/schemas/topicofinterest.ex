@@ -6,7 +6,7 @@ defmodule Rorapi.Schemas.Topicofinterest do
 
   schema "topicofinterest" do
     field :title, :string
-    field :description, :string
+    field :short_desc, :string
 
     timestamps()
   end
@@ -14,8 +14,8 @@ defmodule Rorapi.Schemas.Topicofinterest do
   @doc false
   def changeset(topicofinterest, attrs) do
     topicofinterest
-    |> cast( attrs, [:title, :description])
-    |> validate_required([:title, :description])
+    |> cast( attrs, [:title, :short_desc])
+    |> validate_required([:title, :short_desc])
   end
 
 end
