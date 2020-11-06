@@ -52,6 +52,7 @@ defmodule RorapiWeb.Router do
     # Topic of interests CRUD
     scope "/topic" do
       resources "/", Admin.TopicController, except: [:new, :edit]
+      get "/user_list/:topic_id", Admin.TopicController, :users_list
     end
 
     # User Scope
