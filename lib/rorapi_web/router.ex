@@ -49,6 +49,11 @@ defmodule RorapiWeb.Router do
       get "/cancelled_list/:event_id", Admin.EventusersController, :cancelled_list
     end
 
+    # Topic of interests CRUD
+    scope "/topic" do
+      resources "/", Admin.TopicController, except: [:new, :edit]
+    end
+
     # User Scope
     scope "/user" do
       get "/list", Admin.UsersController, :list
