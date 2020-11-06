@@ -72,6 +72,12 @@ defmodule RorapiWeb.Router do
       post "/add", V1.EventsController, :add
       post "/remove", V1.EventsController, :remove
     end
+
+    # Topic Endpoints
+    scope "/topic" do
+      get "/list", V1.TopicController, :list
+      post "/add", V1.TopicController, :add
+    end
   end
 
 end
