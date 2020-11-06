@@ -3,6 +3,7 @@ defmodule Rorapi.Models.TopicRepo do
 
   alias Rorapi.Repo
   alias Rorapi.Schemas.Topicofinterest
+  alias Rorapi.Schemas.Linker
 
   @doc """
    This is for Add Topic of interest.
@@ -44,11 +45,30 @@ defmodule Rorapi.Models.TopicRepo do
   @doc"""
      This is for topic of interest list.
   """
-  def topic_list(params)do
+  def topic_list(params) do
     get =  Topicofinterest
            |> select([a], a)
            |> order_by([a], desc: a.id)
            |> Repo.paginate(params)
+    {:ok, get}
+  end
+
+  @doc"""
+     This is for topic of interest list for users.
+  """
+  def user_topic_list(user_id, params) do
+    get = (
+            from l in Linker,
+                 where: l.users_id == ^user_id,
+                 join: t in Topicofinterest,
+                 on: l.topicofinterest_id == t.id,
+                 select: %{
+                   id: l.id,
+                   title: t.title,
+                   short_desc: t.short_desc
+                 })
+          |> order_by(desc: :id)
+          |> Repo.paginate(params)
     {:ok, get}
   end
 
