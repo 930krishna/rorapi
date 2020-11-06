@@ -9,7 +9,7 @@ defmodule Rorapi.Schemas.Linker do
     field :topicofinterest_id, :integer
 
     timestamps()
-  ends
+  end
 
   @doc false
   def changeset(linker, attrs) do
