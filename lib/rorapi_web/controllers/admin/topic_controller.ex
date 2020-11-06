@@ -2,6 +2,7 @@ defmodule RorapiWeb.Admin.TopicController do
   use RorapiWeb, :controller
 
   alias RorapiWeb.Admin.TopicView
+  alias RorapiWeb.Admin.UserView
   alias Rorapi.Models.TopicRepo
 
   action_fallback RorapiWeb.FallbackController
@@ -41,6 +42,19 @@ defmodule RorapiWeb.Admin.TopicController do
     conn
     |> put_view(RorapiWeb.SuccessView)
     |> render("200.json", message: message)
+  end
+
+  @doc"""
+     This is for topic of interest list.
+  """
+  def users_list(conn, params) do
+    with {:ok, value} <- TopicRepo.users_list(params) do
+      conn
+      |> put_status(:ok)
+      |> put_view(UserView)
+      |> render("user.json", key: value)
+    end
+
   end
 
 end
