@@ -2,8 +2,25 @@ defmodule RorapiWeb.V1.TopicController do
   use RorapiWeb, :controller
 
   alias Rorapi.Models.LinkerRepo
+  alias RorapiWeb.Admin.TopicView
+  alias Rorapi.Models.TopicRepo
 
   action_fallback RorapiWeb.FallbackController
+
+  @doc"""
+     This is for topic of interest list.
+  """
+  def list(conn, params) do
+    user_id = conn
+              |> get_req_header("user_id")
+              |> List.first
+    with {:ok, value} <- TopicRepo.user_topic_list(user_id, params) do
+      conn
+      |> put_status(:ok)
+      |> put_view(TopicView)
+      |> render("topic.json", key: value)
+    end
+  end
 
   @doc"""
      This is for add topic of interest.
