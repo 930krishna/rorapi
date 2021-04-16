@@ -24,13 +24,5 @@ defmodule RorapiWeb.LoginController do
     end
   end
 
-  @doc"""
-     This is for user login
-  """
-  def sign_in(conn, params) do
-    with {:ok, output} <- UserRepo.view(params) do
-      json conn, %{status: 200, fullname: output.full_name, uid: output.id, message: "Login Successfully"}
-    end
-  end
 
 end
