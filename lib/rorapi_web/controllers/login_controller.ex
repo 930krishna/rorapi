@@ -24,5 +24,4 @@ defmodule RorapiWeb.LoginController do
     end
   end
 
-
 end
