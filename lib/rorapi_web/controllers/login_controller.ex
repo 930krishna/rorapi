@@ -33,8 +33,4 @@ defmodule RorapiWeb.LoginController do
     end
   end
 
-  def test(conn, _params) do
-    text conn, "test test"
-  end
-
 end
