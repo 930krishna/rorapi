@@ -27,7 +27,7 @@ defmodule Rorapi.Schemas.Events do
   @doc false
   def changesetAddRSVP(events, attrs) do
     events
-    |> cast( attrs, [:rsvp_counts])
+    |> cast( attrs, [:rsvp_counts, :type])
     |> validate_required([:rsvp_counts])
   end
 
