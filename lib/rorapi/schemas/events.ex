@@ -20,7 +20,7 @@ defmodule Rorapi.Schemas.Events do
   @doc false
   def changeset(events, attrs) do
     events
-    |> cast( attrs, [:description, :type, :event_date, :duration, :event_host, :location])
+    |> cast( attrs, [:description, :rsvp_counts, :type, :event_date, :duration, :event_host, :location])
     |> validate_required([:description, :type, :event_date, :duration, :event_host, :location])
   end
 
